@@ -10,6 +10,11 @@ Al usar Reflection en C#, estamos pudiendo obtener la información detallada de 
 
 Específicamente lo que nos permite usar Reflection es el namespace ```System.Reflecion```, que contiene clases e interfaces que nos permiten manejar todo lo mencionado anteriormente: ensamblados, tipos, métodos, campos, crear objetos, invocar métodos, etc.
 
+### Estructura de un assembly/ensamblado
+
+Inline-style: 
+![alt text](http://www.codeproject.com/KB/cs/DLR/structure.JPG "Logo Title Text 1")
+
 ## ¿Para qué podría servir?
 
 Supongamos por ejemplo, que necesitamos que nuestra aplicación soporte diferentes tipos de loggers (mecanismos para registrar datos/eventos que van ocurriendo en el flujo del programa). Además, supongamos que hay desarrolladores terceros que nos brindan una .dll externa que escribe información de logger y la envía a un servidor. En ese caso, tenemos dos opciones:
