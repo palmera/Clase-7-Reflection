@@ -99,3 +99,54 @@ public class HourEmployee : Employee
 
 ```
 
+Una vez creadas las clases, vamos a generar el assembly (dll) y a copiarlo a alguna carpeta en el disco. El assembly generado lo podemos encontrar en la carpeta ```EjemplosReflection\bin\Debug```. Recomendamos copiarlo a alguna carpeta de fácil acceso, por ejemplo ```c:\pruebas:```
+
+Ya tenemos el assembly que utilizaremos para las pruebas, por lo que comenzaremos a utilizar
+reflection. Vamos a cerrar el proyecto anterior y a crear un proyecto nuevo (independiente del anterior), esta vez del tipo “Aplicación de Consola” a la que llamaremos de la forma que queramos.
+
+Lo primero que probaremos será la capacidad de inspección que ofrece reflection sobre los
+assemblies. Para ello, en el método Main agregaremos el siguiente código (esta vez no se puede copiar). Nota: Se deberán agregar algunos imports.
+
+Primero inspeccionamos el assembly:
+
+```
+static void Main(string[] args)
+{
+    // Cargamos el assembly de ejemplo en memoria
+    Assembly miAssembly= Assembly.LoadFile(@"c:\Pruebas\EjemplosReflection.dll");
+    // Podemos ver que Tipos hay dentro del assembly
+    foreach (Type tipo in miAssembly.GetTypes())
+    {
+       Console.WriteLine(string.Format("Clase: {0}" ,tipo.Name));
+
+       Console.WriteLine("Propiedades");
+       foreach (PropertyInfo prop in tipo.GetProperties())
+       {
+          Console.WriteLine(string.Format("\t{0} : {1}", prop.Name, prop.PropertyType.Name));
+       }
+       Console.WriteLine("Constructores");
+       foreach (ConstructorInfo con in tipo.GetConstructors())
+       {
+          Console.Write("\tConstructor: ");
+          foreach (ParameterInfo param in con.GetParameters())
+          {
+             Console.Write(string.Format("{0} : {1} ", param.Name,param.ParameterType.Name));
+          }
+          Console.WriteLine();
+       }
+       Console.WriteLine();
+       Console.WriteLine("Metodos");
+       foreach (MethodInfo met in tipo.GetMethods())
+       {
+          Console.Write(string.Format("\t{0} ", met.Name));
+          foreach (ParameterInfo param in met.GetParameters())
+          {
+          Console.Write(string.Format("{0} : {1} ", param.Name,param.ParameterType.Name));
+       }
+       Console.WriteLine();
+    }
+    Console.WriteLine();
+    }
+    Console.ReadLine();
+}
+```
