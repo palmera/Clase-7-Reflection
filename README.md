@@ -33,7 +33,7 @@ Lo que es importante para lograr el desacoplamiento de tipos externos, es que nu
 
 ## Ejemplo en ```C#```
 
-Crearemos un proyecto simple con estas tres clases que se listan a continuación. Tendremos empleados y tipos concretos de empleados (de manera que los empleados concretos cumplen la misma interfaz que los empleados genéricos),
+Crearemos un proyecto simple con estas tres clases que se listan a continuación. Tendremos empleados y tipos concretos de empleados (de manera que los empleados concretos cumplen la misma interfaz que los empleados genéricos). Le llamaremos ```EjemplosReflection```
 
 ```C#
 
@@ -98,6 +98,7 @@ public class HourEmployee : Employee
 }
 
 ```
+### Inspeccionando el ensamblado
 
 Una vez creadas las clases, vamos a generar el assembly (dll) y a copiarlo a alguna carpeta en el disco. El assembly generado lo podemos encontrar en la carpeta ```EjemplosReflection\bin\Debug```. Recomendamos copiarlo a alguna carpeta de fácil acceso, por ejemplo ```c:\pruebas:```
 
@@ -105,7 +106,7 @@ Ya tenemos el assembly que utilizaremos para las pruebas, por lo que comenzaremo
 reflection. Vamos a cerrar el proyecto anterior y a crear un proyecto nuevo (independiente del anterior), esta vez del tipo “Aplicación de Consola” a la que llamaremos de la forma que queramos.
 
 Lo primero que probaremos será la capacidad de inspección que ofrece reflection sobre los
-assemblies. Para ello, en el método Main agregaremos el siguiente código (esta vez no se puede copiar). Nota: Se deberán agregar algunos imports.
+assemblies. Para ello, en el método Main agregaremos el siguiente códig. Nota: Se deberán agregar algunos imports.
 
 Primero inspeccionamos el assembly:
 
@@ -154,3 +155,43 @@ static void Main(string[] args)
 Analizar detenidamente la salida.
 
 Acabamos de ver como mediante reflection es posible investigar el contenido de un assembly, obtener su información, como conocer las propiedades, los constructores y los métodos de cada clase. 
+
+### Instanciando tipos dinámicamente 
+
+Como ya hemos mencionado, otra de las pricipales ventajas de reflection es que además de poder conocer información sobre los tipos dentro de un assembly, permite trabajar con ellos de manera dinámica. Para ejemplificarlo, vamos a crear un objeto de la clase HourEmployee utilizando un constructor con parámetros, le vamos a cambiar el valor de una de sus propiedades y luego le invocaremos un método. Todo esto desde nuestra aplicación de consola, que NO tiene una referencia a la dll
+con las clases, por lo que todo se hará de manera dinámica. 
+
+Cambiemos el contenido del Main por el siguiente:
+
+```C#
+
+static void Main(string[] args)
+{
+   // Cargamos el assembly en memoria
+   Assembly testAssembly = Assembly.LoadFile(@"c:\Pruebas\EjemplosReflection.dll"); 
+   
+   // Obtenemos el tipo que representa a Empleado por Hora (HourEmployee)
+   Type employeeType = testAssembly.GetType("EjemplosReflection.HourEmployee");
+   
+   // Creamos una instancia de Empleado por hora
+   object employeeInstance = Activator.CreateInstance(employeeType);
+   
+   // O también podemos crearlo pasandole parámetros
+   employeeInstance = Activator.CreateInstance(employeeType, new object[] { "Juan", "1.232.232-3", 25.5, 10 });
+   
+   // Lo mostramos
+   Console.WriteLine(employeeInstance.ToString());
+   
+   //Invocamos al método CalculateSalary
+   MethodInfo met = employeeType.GetMethod("CalculateSalary");
+   Console.WriteLine(string.Format("Sueldo: {0}", met.Invoke(employeeInstance, null)));
+   
+   //También podemos cambiar el valor de las horas trabajadas
+   PropertyInfo prop = employeeType.GetProperty("HoursWorked");
+   prop.SetValue(employeeInstance, 300, null);
+   
+   Console.ReadLine();
+   
+}
+
+```
