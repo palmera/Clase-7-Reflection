@@ -32,4 +32,66 @@ Lo que es importante para lograr el desacoplamiento de tipos externos, es que nu
 
 ## Ejemplo en ```C#```
 
+```C#
+
+public abstract class Empleado
+{
+    public string Nombre { get; set; }
+    public string CI { get; set; }
+    public Empleado()
+    {
+       Nombre = "Sin Nombre";
+       CI = "Sin CI.";
+    }
+    public Empleado(String unNombre, string unaCI)
+    {
+       Nombre = unNombre;
+       CI = unaCI;
+    }
+    public override string ToString()
+    {
+       return string.Format("{0} - {1}", CI, Nombre);
+    }
+    public abstract double CalcularSueldo();
+}
+public class EmpleadoMensual : Empleado
+{
+ public double SueldoMensual { get; set; }
+ public EmpleadoMensual() { }
+ public EmpleadoMensual(string unNombre, String unaCI, double unSueldo)
+ : base(unNombre, unaCI)
+ {
+ SueldoMensual = unSueldo;
+ }
+ public override string ToString()
+ {
+ return string.Format("{0} {1}", "Mensual", base.ToString());
+ }
+ public override double CalcularSueldo()
+ {
+ return SueldoMensual;
+ }
+}
+public class EmpleadoPorHora : Empleado
+{
+ public double ValorHora { get; set; }
+ public int HorasTrabajadas {get;set;}
+ public EmpleadoPorHora() { }
+ public EmpleadoPorHora(string unNombre, String unaCI, double unValorHora, int unasHoras)
+ : base(unNombre, unaCI)
+ {
+ ValorHora = unValorHora;
+ HorasTrabajadas = unasHoras;
+ }
+ public override string ToString()
+ {
+ return string.Format("{0} {1}", "Por Hora", base.ToString());
+ }
+ public override double CalcularSueldo()
+ {
+ return HorasTrabajadas * ValorHora;
+ }
+}
+
+```
 
