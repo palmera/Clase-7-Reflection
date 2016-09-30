@@ -195,3 +195,14 @@ static void Main(string[] args)
 }
 
 ```
+
+IMPORTANTE: aquí estamos asumiendo los nombres de los métodos y llamandolos directamente pasandole Strings como parámetros. Esto en un caso más real no sería correcto, ya que primero deberíamos asegurarnos de que el tipo que queremos instanciar cumple con la interfaz (es decir, tiene los métodos), que queremos usar.
+
+Esto se puede hacer preguntando de la siguiente forma:
+
+```C#
+
+typeof(IMyInterface).IsAssignableFrom(typeof(MyType))
+typeof(MyType).GetInterfaces().Contains(typeof(IMyInterface))
+
+```
