@@ -54,43 +54,44 @@ public abstract class Empleado
     }
     public abstract double CalcularSueldo();
 }
+
 public class EmpleadoMensual : Empleado
 {
- public double SueldoMensual { get; set; }
- public EmpleadoMensual() { }
- public EmpleadoMensual(string unNombre, String unaCI, double unSueldo)
- : base(unNombre, unaCI)
- {
- SueldoMensual = unSueldo;
- }
- public override string ToString()
- {
- return string.Format("{0} {1}", "Mensual", base.ToString());
- }
- public override double CalcularSueldo()
- {
- return SueldoMensual;
- }
+    public double SueldoMensual { get; set; }
+    public EmpleadoMensual() { }
+    public EmpleadoMensual(string unNombre, String unaCI, double unSueldo)
+    : base(unNombre, unaCI)
+    {
+       SueldoMensual = unSueldo;
+    }
+    public override string ToString()
+    {
+       return string.Format("{0} {1}", "Mensual", base.ToString());
+    }
+    public override double CalcularSueldo()
+    {
+       return SueldoMensual;
+    }
 }
 public class EmpleadoPorHora : Empleado
 {
- public double ValorHora { get; set; }
- public int HorasTrabajadas {get;set;}
- public EmpleadoPorHora() { }
- public EmpleadoPorHora(string unNombre, String unaCI, double unValorHora, int unasHoras)
- : base(unNombre, unaCI)
- {
- ValorHora = unValorHora;
- HorasTrabajadas = unasHoras;
- }
- public override string ToString()
- {
- return string.Format("{0} {1}", "Por Hora", base.ToString());
- }
- public override double CalcularSueldo()
- {
- return HorasTrabajadas * ValorHora;
- }
+    public double ValorHora { get; set; }
+    public int HorasTrabajadas {get;set;}
+    public EmpleadoPorHora() { }
+    public EmpleadoPorHora(string unNombre, String unaCI, double unValorHora, int unasHoras)
+    : base(unNombre, unaCI)
+    {
+       ValorHora = unValorHora;
+       HorasTrabajadas = unasHoras;
+    }
+    public override string ToString()
+    {
+       return string.Format("{0} {1}", "Por Hora", base.ToString());
+    }
+    public override double CalcularSueldo()
+    {
+       return HorasTrabajadas * ValorHora;
+    }
 }
 
 ```
