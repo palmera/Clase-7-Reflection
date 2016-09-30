@@ -142,10 +142,10 @@ static void Main(string[] args)
           foreach (ParameterInfo param in met.GetParameters())
           {
           Console.Write(string.Format("{0} : {1} ", param.Name,param.ParameterType.Name));
+          }
+          Console.WriteLine();
        }
        Console.WriteLine();
-    }
-    Console.WriteLine();
     }
     Console.ReadLine();
 }
