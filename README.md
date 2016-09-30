@@ -14,7 +14,7 @@ Específicamente lo que nos permite usar Reflection es el namespace System.Refle
 
 Supongamos por ejemplo, que necesitamos que nuestra aplicación soporte diferentes tipos de loggers (mecanismos para registrar datos/eventos que van ocurriendo en el flujo del programa). Además, supongamos que hay desarrolladores terceros que nos brindan una .dll externa que escribe información de logger y la envía a un servidor. En ese caso, tenemos dos opciones:
 
-1) Podemos referenciar al ensamblado directamente y llamar a sus métodos (como hemos hecho siempre)
+1) Podemos referenciar al ensamblado directamente y llamar a sus métodos (como hemos hecho siempre)  
 2) Podemos usar Reflection para cargar el ensamblado y llamar a sus métodos a partir de sus interfaces.
 
 En este caso, si quisieramos que nuestra aplicación sea lo más desacoplada posible, de manera que otros loggers puedan ser agregados (o 'plugged in' -de ahí el nombre plugin-) de forma sencilla y SIN RECOMPILAR la aplicación, es necesario elegir la segunda opción.
