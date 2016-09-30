@@ -141,7 +141,7 @@ static void Main(string[] args)
           Console.Write(string.Format("\t{0} ", met.Name));
           foreach (ParameterInfo param in met.GetParameters())
           {
-          Console.Write(string.Format("{0} : {1} ", param.Name,param.ParameterType.Name));
+             Console.Write(string.Format("{0} : {1} ", param.Name,param.ParameterType.Name));
           }
           Console.WriteLine();
        }
@@ -150,3 +150,7 @@ static void Main(string[] args)
     Console.ReadLine();
 }
 ```
+
+Analizar detenidamente la salida.
+
+Acabamos de ver como mediante reflection es posible investigar el contenido de un assembly, obtener su información, como conocer las propiedades, los constructores y los métodos de cada clase. 
