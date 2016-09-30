@@ -11,6 +11,8 @@ Al usar Reflection en C#, estamos pudiendo obtener la información detallada de 
 Específicamente lo que nos permite usar Reflection es el namespace ```System.Reflecion```, que contiene clases e interfaces que nos permiten manejar todo lo mencionado anteriormente: ensamblados, tipos, métodos, campos, crear objetos, invocar métodos, etc.
 
 ## Estructura de un assembly/ensamblado
+
+Los assemblies contienen módulos, los módulos contienen tipos y los tipos contienen miembros. Reflection provee clases para encapsular estos elementos. Entonces como dijimos posible utilizar reflection para crear dinámicamente instancias de un tipo, obtener el tipo de un objeto existente e invocarle métodos y acceder a sus atributos de manera dinámica. 
  
 ![alt text](http://www.codeproject.com/KB/cs/DLR/structure.JPG)
 
@@ -29,68 +31,69 @@ Por ejemplo podríamos hacer que el usuario elija (a medida que está usando la 
 
 Lo que es importante para lograr el desacoplamiento de tipos externos, es que nuestro código referencie a una Interfaz, que es la que toda .dll externa va a tener que cumplir. Tiene que existir entonces ese contrato previo, de lo contrario, no sería posible saber de antemano qué metodos llamar de las librerías externas que poseen clases para usar loggers.
 
-
 ## Ejemplo en ```C#```
+
+Crearemos un proyecto simple con estas tres clases que se listan a continuación. Tendremos empleados y tipos concretos de empleados (de manera que los empleados concretos cumplen la misma interfaz que los empleados genéricos),
 
 ```C#
 
-public abstract class Empleado
+public abstract class Employee
 {
-    public string Nombre { get; set; }
+    public string Name { get; set; }
     public string CI { get; set; }
-    public Empleado()
+    public Employee()
     {
-       Nombre = "Sin Nombre";
-       CI = "Sin CI.";
+       Name = "Unnamed";
+       CI = "This guy's no documents";
     }
-    public Empleado(String unNombre, string unaCI)
+    public Employee(String aName, string aCI)
     {
-       Nombre = unNombre;
-       CI = unaCI;
+       Name = aName;
+       CI = aCI;
     }
     public override string ToString()
     {
-       return string.Format("{0} - {1}", CI, Nombre);
+       return string.Format("{0} - {1}", CI, Name);
     }
-    public abstract double CalcularSueldo();
+    public abstract double CalculateSalary();
 }
 
-public class EmpleadoMensual : Empleado
+public class MonthlyEmployee : Employee
 {
-    public double SueldoMensual { get; set; }
-    public EmpleadoMensual() { }
-    public EmpleadoMensual(string unNombre, String unaCI, double unSueldo)
-    : base(unNombre, unaCI)
+    public double MonthlySalary { get; set; }
+    public MonthlyEmployee() { }
+    public MonthlyEmployee(string aName, String aCI, double aSalary)
+    : base(aName, aCI)
     {
-       SueldoMensual = unSueldo;
+       MonthlySalary = aSalary;
     }
     public override string ToString()
     {
-       return string.Format("{0} {1}", "Mensual", base.ToString());
+       return string.Format("{0} {1}", "Monnhtly employee", base.ToString());
     }
-    public override double CalcularSueldo()
+    public override double CalculateSalary()
     {
-       return SueldoMensual;
+       return MonthlySalary;
     }
 }
-public class EmpleadoPorHora : Empleado
+public class HourEmployee : Employee
 {
-    public double ValorHora { get; set; }
-    public int HorasTrabajadas {get;set;}
-    public EmpleadoPorHora() { }
-    public EmpleadoPorHora(string unNombre, String unaCI, double unValorHora, int unasHoras)
-    : base(unNombre, unaCI)
+    public double HourValue { get; set; }
+    public int HoursWorked {get;set;}
+    public HourEmployee() { }
+    public HourEmployee(string aName, String aCI, double anHourValue, int someHoursWorked)
+    : base(aName, aCI)
     {
-       ValorHora = unValorHora;
-       HorasTrabajadas = unasHoras;
+       HourValue = anHourValue;
+       HoursWorked = someHoursWorked;
     }
     public override string ToString()
     {
-       return string.Format("{0} {1}", "Por Hora", base.ToString());
+       return string.Format("{0} {1}", "Hour Employee", base.ToString());
     }
-    public override double CalcularSueldo()
+    public override double CalculateSalary()
     {
-       return HorasTrabajadas * ValorHora;
+       return HoursWorked * HourValue;
     }
 }
 
