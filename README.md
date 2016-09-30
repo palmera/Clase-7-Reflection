@@ -109,7 +109,7 @@ assemblies. Para ello, en el método Main agregaremos el siguiente código (esta
 
 Primero inspeccionamos el assembly:
 
-```
+```C#
 static void Main(string[] args)
 {
     // Cargamos el assembly de ejemplo en memoria
