@@ -1,4 +1,4 @@
-# Clase-7: Reflection
+# Reflection
 
 ## Introducción a Reflection
 
