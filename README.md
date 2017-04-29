@@ -1,4 +1,4 @@
-# Clase-6: Reflection e Introducción a JavaScript avanzado
+# Clase-7: Reflection
 
 ## Introducción a Reflection
 
